@@ -6,6 +6,9 @@
     <div class="container mx-auto py-8 text-center">
         <h1 class="text-4xl font-semibold text-black-600">Welcome to KickOffKickBack</h1>
 
+        <div class="container mx-auto py-8 text-center">
+        <h1 class="text-4xl font-semibold text-black-600">Welcome to KickOffKickBack</h1>
+
         <!-- Bootstrap Carousel -->
         <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
@@ -35,31 +38,53 @@
         </div>
     </div>
 
-    <!-- OwlCarousel JS Initialization Script -->
-    <script>
-        $(document).ready(function(){
-            $('.owl-carousel').owlCarousel({
-                loop: true,
-                margin: 10,
-                responsiveClass: true,
-                responsive: {
-                    0: {
-                        items: 1,
-                        nav: true
-                    },
-                    600: {
-                        items: 3,
-                        nav: false
-                    },
-                    1000: {
-                        items: 5,
-                        nav: true,
-                        loop: false
+        <!-- Featured Products -->
+        <div class="my-8">
+            <h2 class="text-2xl font-semibold">Featured Products</h2>
+            <div class="flex items-center space-x-4">
+                @foreach($products as $product)
+                    @if($product->is_featured)
+                        <div class="w-1/5">
+                            <img src="{{ asset('assets/uploads/product/'.$product->image) }}" alt="{{ $product->name }}" class="carousel-image">
+                            <h3 class="text-lg">{{ $product->name }}</h3>
+                        </div>
+                    @endif
+                @endforeach
+            </div>
+        </div>
+
+        <!-- Other Content -->
+
+        <!-- OwlCarousel JS Initialization Script -->
+        <script>
+            $(document).ready(function(){
+                $('.owl-carousel').owlCarousel({
+                    loop: true,
+                    margin: 10,
+                    responsiveClass: true,
+                    responsive: {
+                        0: {
+                            items: 1,
+                            nav: true
+                        },
+                        600: {
+                            items: 3,
+                            nav: false
+                        },
+                        1000: {
+                            items: 5,
+                            nav: true,
+                            loop: false
+                        }
                     }
-                }
+                });
             });
-        });
-    </script>
+        </script>
+    </div>
+
+    <!-- OwlCarousel CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
 @endsection
 
 <style>

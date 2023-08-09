@@ -21,6 +21,9 @@ Route::get('/home', function () {
 Auth::routes();
 Route::post('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
 Route::get('/', [FrontEndController::class, 'showAllProducts'])->name('frontend.index');
+Route::get('/filter-products', [FrontEndController::class, 'filterProducts'])->name('frontend.filter.products');
+
+
 // Protected routes for authenticated users with admin privileges
 Route::middleware(['auth', 'isAdmin'])->group(function () {
 
