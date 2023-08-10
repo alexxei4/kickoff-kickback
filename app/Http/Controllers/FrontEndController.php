@@ -12,6 +12,12 @@ use Illuminate\Http\Request;
 
 class FrontEndController extends Controller
 {
+
+    public function showProduct(Product $product)
+    {
+        return view('frontend.product.show', compact('product'));
+    }
+
     public function showCarousel()
     {
         $products = Product::all();

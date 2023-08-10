@@ -1,4 +1,5 @@
 <div class="p-4 border rounded-lg">
+    <a href="{{ route('frontend.product.show', $product) }}" class="block">
         @foreach($products as $product)
                 <div class="p-4 border rounded-lg">
                     <h2 class="text-xl font-semibold">{{ $product->name }}</h2>

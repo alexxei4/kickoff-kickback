@@ -5,6 +5,8 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\FrontEndController;
 use App\Models\Category;
 use App\Models\Product;
+use App\Http\Controllers\Auth\ForgotPasswordController;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -19,18 +21,29 @@ Route::get('/home', function () {
 
 // Authentication routes
 Auth::routes();
+Route::get('/products/{product}', [FrontEndController::class, 'showProduct'])->name('frontend.product.show');
 Route::post('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
 Route::get('/', [FrontEndController::class, 'showAllProducts'])->name('frontend.index');
 Route::get('/filter-products', [FrontEndController::class, 'filterProducts'])->name('frontend.filter.products');
+Route::get('password/reset', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
 
 
 // Protected routes for authenticated users with admin privileges
 Route::middleware(['auth', 'isAdmin'])->group(function () {
 
+
+
     // Admin dashboard
     Route::get('/dashboard', function () {
         return view('auth.admin');
     });
+    Route::get('/sales', [App\Http\Controllers\Admin\AdminController::class,'sales'])->name('admin.sales');
+    Route::get('/users', [App\Http\Controllers\Admin\AdminController::class,'users'])->name('admin.users.users');  
+
+
+    Route::get('/users/{user}/edit', [App\Http\Controllers\Admin\AdminController::class,'edit'])->name('users.edit');
+    Route::put('/users/{user}', [App\Http\Controllers\Admin\AdminController::class,'update'])->name('users.update');
+    Route::delete('/users/{user}',[App\Http\Controllers\Admin\AdminController::class,'destroy'])->name('users.destroy');
 
     // Categories
     Route::get('/admin', [AdminController::class, 'index'])->name('admin.dashboard');

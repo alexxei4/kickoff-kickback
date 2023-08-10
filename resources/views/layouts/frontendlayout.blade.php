@@ -4,6 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
     <title>@yield('title')</title>
     <!-- Add your CSS stylesheets and any necessary meta tags here -->
         <!-- Bootstrap and jQuery JS (Add this before the closing </body> tag of your layout file) -->

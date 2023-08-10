@@ -5,6 +5,8 @@
   <meta charset="utf-8" />
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <title>
     @yield('title', 'Default Title')
@@ -29,7 +31,33 @@
         Admin
       </div>
       <div class="sidebar-wrapper">
+      
+      
     <ul class="nav">
+      <li class="{{ request()->is('sales') ? 'active' : '' }}">
+        <a href="{{ route('admin.sales') }}">
+            <i class="nc-icon nc-chart-bar-32"></i>
+            <p>Sales/Analytics</p>
+        </a>
+    </li>
+      <li class="{{ request()->is('users') ? 'active' : '' }}">
+        <a href="{{ route('admin.users.users') }}">
+            <i class="nc-icon nc-single-02"></i>
+            <p>Users</p>
+        </a>
+    </li>
+      <li class="{{ request()->is('admin') ? 'active' : '' }}">
+        <a href="{{ route('frontend.index') }}">
+          <i class="nc-icon nc-shop"></i>
+          <p>Back to Store</p>
+        </a>
+      </li>
+      <li class="{{ request()->is('admin') ? 'active' : '' }}">
+        <a href="{{ route('logout') }}">
+          <i class="nc-icon nc-button-power"></i>
+            <p>Logout</p>
+        </a>
+      </li>
         <li class="{{ request()->is('admin') ? 'active' : '' }}">
             <a href="{{ url('/dashboard') }}">
                 <i class="nc-icon nc-bank"></i>

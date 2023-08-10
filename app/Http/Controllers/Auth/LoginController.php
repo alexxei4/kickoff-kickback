@@ -24,13 +24,13 @@ class LoginController extends Controller
     protected function authenticated(Request $request, $user)
     {
         if ($user->role_as == '1') {
-            return redirect()->route('/dashboard'); // Assuming 'dashboard' is the route name for the admin dashboard
+            return redirect()->route('dashboard'); // Assuming 'dashboard' is the route name for the admin dashboard
         } else {
             // For normal users, they will be redirected to the default page.
             return redirect('/');
         }
     }
-
+    
     public function logout()
     {
         Auth::logout();

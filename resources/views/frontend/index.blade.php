@@ -19,6 +19,7 @@
             <!-- Loop through and display the products here -->
             @foreach($products as $product)
                 <div class="p-4 border rounded-lg">
+                
                 <h2 class="text-xl font-semibold">{{ $product->name }}</h2>
                     <p class="text-gray-600">{{ $product->description }}</p>
                     <p class="mt-2 text-gray-800">${{ $product->cost }}</p>
