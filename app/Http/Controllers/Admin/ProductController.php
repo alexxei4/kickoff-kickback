@@ -22,7 +22,7 @@ class ProductController extends Controller
      public function showAllProducts()
      {
          $products = Product::all();
-         return view('products.index', compact('products'));
+         return view('products.index', ['products' => $products]);
      }
 
     public function index()

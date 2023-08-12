@@ -12,10 +12,11 @@ class ModifyProductsTable extends Migration
      * @return void
      */
     public function up()
-    {
+    { /*
         Schema::table('products', function (Blueprint $table) {
             $table->string('slug', 255)->default('default-slug')->change();
         });
+        */
     }
 
     /**

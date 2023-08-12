@@ -17,7 +17,7 @@ class CreateProductsTable extends Migration
             $table->id();
             $table->string("category_id");
             $table->string("name");
-            $table->string('slug', 255)->default('default-slug')->change();
+            $table->string('slug', 255);
             $table->longText("description");
             $table->decimal("cost");
             $table->integer("quantity");
