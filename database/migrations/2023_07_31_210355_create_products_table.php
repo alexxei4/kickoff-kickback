@@ -17,13 +17,13 @@ class CreateProductsTable extends Migration
             $table->id();
             $table->string("category_id");
             $table->string("name");
-            $table->string('slug')->default('default-slug');
+            $table->string('slug', 255)->default('default-slug')->change();
             $table->longText("description");
             $table->decimal("cost");
             $table->integer("quantity");
             $table->string("image");
-            $table->boolean("is_featured");
-            $table->boolean("is_available");
+            $table->boolean('is_featured')->nullable()->default(null)->change();
+            $table->boolean('is_available')->nullable()->default(null)->change();
             $table->string("brand");
             $table->string('sku')->unique();
             $table->timestamps();
