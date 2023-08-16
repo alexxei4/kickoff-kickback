@@ -18,6 +18,7 @@
             
             <!-- Loop through and display the products here -->
             @foreach($products as $product)
+            <a href="{{ route('frontend.product.show', $product) }}" style=" text-decoration: none;color: black;" >
                 <div class="p-4 border rounded-lg">
                 
                 <h2 class="text-xl font-semibold">{{ $product->name }}</h2>
@@ -29,6 +30,7 @@
                         <p class="mt-4">No image available</p>
                     @endif
                 </div>
+            </a>
             @endforeach
         </div>
          

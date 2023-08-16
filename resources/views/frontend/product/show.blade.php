@@ -8,51 +8,45 @@
         <meta name="description" content="" />
         <meta name="author" content="" />
         <title>KickOffKickBack</title>
-        <!-- Favicon-->
+        <meta name="csrf-token" content="{{ csrf_token() }}">
         <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
-        <!-- Bootstrap icons-->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
-        <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="css/styles.css" rel="stylesheet" />
+        <!--<link href="css/styles.css" rel="stylesheet" /> -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+        
+            $(document).ready(function() {
+                @auth
+                $('#addToWishlistButton').on('click', function() {
+                    var productId = $(this).data('product-id');
+                    $.post('{{ route('wishlist.add') }}', { product_id: productId }, function(response) {
+                        alert(response.message);
+                    });
+                });
+                @else
+                $('.addToWishlistButton').on('click', function() {
+                    window.location.href = '{{ route('login') }}';
+                });
+                @endauth
+               
+            });
+        </script>
+        
+        
     </head>
     <body>
-        <!-- Navigation-->
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <div class="container px-4 px-lg-5">
-                <a class="navbar-brand" href="#!">Start Bootstrap</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#!">All Products</a></li>
-                                <li><hr class="dropdown-divider" /></li>
-                                <li><a class="dropdown-item" href="#!">Popular Items</a></li>
-                                <li><a class="dropdown-item" href="#!">New Arrivals</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                    <form class="d-flex">
-                        <button class="btn btn-outline-dark" type="submit">
-                            <i class="bi-cart-fill me-1"></i>
-                            Cart
-                            <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
-                        </button>
-                        <button class="btn btn-outline-dark" type="submit">
-                            <i class="bi bi-heart"></i>
-                            Wishlist
-                            <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </nav>
-        <!-- Product section-->
         <section class="py-5">
+            <button class="btn btn-outline-dark flex-shrink-0" type="button" href="/">
+                <i class="fa-solid fa-arrow-left-long"></i>
+                <a class="nav-link" href="/">Back To Products</a>
+            </button>
             <div class="container px-4 px-lg-5 my-5">
+                
                 <div class="row gx-4 gx-lg-5 align-items-center">
                     <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" src="{{ asset('assets/uploads/product/' . $product->image) }}" alt="..." /></div>
                     <div class="col-md-6">
@@ -67,7 +61,12 @@
                             <input class="form-control text-center me-3" id="inputQuantity" type="num" value="1" style="max-width: 3rem" />
                             <button class="btn btn-outline-dark flex-shrink-0" type="button">
                                 <i class="bi-cart-fill me-1"></i>
-                                Add to cart
+                                Add to Cart
+                            </button>
+                            &nbsp;
+                            <button id="addToWishlistButton"class="btn btn-outline-dark flex-shrink-0" type="button" data-product-id="{{ $product->id }}">
+                                <i class="bi bi-heart"></i>
+                                Add to Wishlist
                             </button>
                         </div>
                     </div>
@@ -121,9 +120,9 @@
                                     $18.00
                                 </div>
                             </div>
-                            <!-- Product actions-->
+                    
                             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a></div>
+                                <button  class="btn btn-outline-dark mt-auto" >Add to Cart</button>
                             </div>
                             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                                 <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Add to Wishlist</a></div>
@@ -185,3 +184,5 @@
     </body>
 </html>
 @endsection
+
+

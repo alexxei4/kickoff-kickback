@@ -18,13 +18,9 @@
         <!-- Bootstrap CSS (Add this to the <head> section of your layout file) -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- OwlCarousel CSS (Add this to the <head> section of your layout file) -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" rel="stylesheet">
 
-
-
-    <!-- OwlCarousel JS (Add this before the closing </body> tag of your layout file) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 
 
@@ -33,29 +29,57 @@
 <body class="bg-gray-100">
     <header class="bg-white shadow">
         <!-- Add your header content here -->
-        <nav class="container mx-auto py-4 px-8 flex items-center justify-between">
-            <a href="{{ route('home') }}" class="text-2xl font-bold text-black-600"> <img src="{{ asset('images/KickOffKickBack.png') }}" alt="My Store Logo" width="100" height="100"></a>
-            <ul class="flex space-x-4">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container px-4 px-lg-5">
+                <a href="{{ route('home') }}" class="text-2xl font-bold text-black-600"> <img src="{{ asset('images/KickOffKickBack.png') }}" alt="My Store Logo" width="100" height="100"></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="/home">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="">About</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/">Products</a></li>
+                        @if (Route::has('login'))
+                            @auth
+                                <li class="nav-item">
+                                    <a class="nav-link">
+                                        <form method="POST" action="{{ route('logout') }}">
+                                            @csrf
+                                            <button type="submit" class="text-black-600">Logout</button>
+                                        </form>
+                                    </a>
+                                </li>
+                            @else
+                                <li class="nav-item">
+                                    <a class = "nav-link" href="{{ route('login') }}" class="text-black-600">Log in</a>
+                                </li>
 
-                <li><a href="{{ route('frontend.index') }}" class="text-black-600">Products</a></li>
-                @if (Route::has('login'))
-                    @auth
-                        <li>
-                            <form method="POST" action="{{ route('logout') }}">
-                                @csrf
-                                <button type="submit" class="text-black-600">Logout</button>
-                            </form>
-                        </li>
-                    @else
-                        <li><a href="{{ route('login') }}" class="text-black-600">Log in</a></li>
-
-                        @if (Route::has('register'))
-                            <li><a href="{{ route('register') }}" class="text-black-600">Register</a></li>
+                                @if (Route::has('register'))
+                                    <li class="nav-item">
+                                        <a   class = "nav-link"  href="{{ route('register') }}" class="text-black-600">Register</a>
+                                    </li>
+                                @endif
                         @endif
+                        @endauth
+
+    
+                        
+                    </ul>
+                    @auth
+                        <div class="d-flex">
+                            <button class="btn btn-outline-dark flex-shrink-0" type="button">
+                                Cart
+                                <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
+                            </button>
+                            &nbsp;
+                            <button class="btn btn-outline-dark flex-shrink-0" type="button">
+                               <a class="nav-link" href="{{ route('wishlist.index') }}">Wishlist</a>
+                               
+                                <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
+                            </button>
+                        </div>
                     @endauth
-                @endif
-                <!-- Add more navigation links as required -->
-            </ul>
+                </div>
+            </div>
         </nav>
 
     </header>

@@ -6,6 +6,8 @@ use App\Http\Controllers\FrontEndController;
 use App\Models\Category;
 use App\Models\Product;
 use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\WishlistController;
+use App\Http\Controllers\CartController;
 
 
 Route::get('/', function () {
@@ -17,7 +19,11 @@ Route::get('/home', function () {
     return view('welcome', compact('products'));
 })->name('home');
 
+Route::get('/wishlist', [WishlistController::class, 'index'])->name('wishlist.index');
+Route::post('/wishlist/add', [WishlistController::class, 'addToWishlist'])->name('wishlist.add');
+Route::post('/wishlist/remove', [WishlistController::class, 'removeFromWishlist'])->name('wishlist.remove');
 
+//Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
 
 // Authentication routes
 Auth::routes();
