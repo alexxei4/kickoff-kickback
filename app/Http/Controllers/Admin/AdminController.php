@@ -37,7 +37,8 @@ class AdminController extends Controller
 
     public function update(Request $request, User $user)
     {
-        // Validate the incoming data
+        
+      
         $validatedData = $request->validate([
             'firstname' => 'required|string|max:255',
             'lastname' => 'required|string|max:255',
@@ -47,9 +48,8 @@ class AdminController extends Controller
             
           
         ]);
-
-        // Update the user with validated data
         $user->update($validatedData);
+
 
         return redirect()->route('user')->with('success', 'User updated successfully!');
     }

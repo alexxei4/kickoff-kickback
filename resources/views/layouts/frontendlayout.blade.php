@@ -40,6 +40,13 @@
                         <li class="nav-item"><a class="nav-link" href="/">Products</a></li>
                         @if (Route::has('login'))
                             @auth
+                                
+                                @if(Auth::user()->role === 1)
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/dashboard">Admin Dashboard</a>
+                                </li>
+                                @endif
+                               
                                 <li class="nav-item">
                                     <a class="nav-link">
                                         <form method="POST" action="{{ route('logout') }}">
@@ -66,16 +73,19 @@
                     </ul>
                     @auth
                         <div class="d-flex">
-                            <button class="btn btn-outline-dark flex-shrink-0" type="button">
-                                Cart
-                                <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
-                            </button>
+                            
+                            <a href="" class="btn btn-outline-dark flex-shrink-0">
+                                Cart <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
+                            </a>
                             &nbsp;
                             <a href="{{ route('wishlist.index') }}" class="btn btn-outline-dark flex-shrink-0">
                                 Wishlist <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
                             </a>
                         </div>
                     @endauth
+                    @if (Route::has('login'))
+                   
+                    @endif
                 </div>
             </div>
         </nav>

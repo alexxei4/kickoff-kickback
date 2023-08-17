@@ -21,6 +21,7 @@
   <link href="../assets/bootstrap.min.css" rel="stylesheet" />
   <link href="../assets/css/paper-dashboard.css?v=2.0.1" rel="stylesheet" />
   <link href="{{ asset('css/paper-dashboard.css') }}" rel="stylesheet">
+  
 </head>
 
 <body class="">

@@ -7,36 +7,44 @@
 
     <div class="card">
         <div class="card-body">
-        <form action="{{ route('users.update', $user->id) }}" method="POST" enctype="multipart/form-data">
-            @csrf
-            @method('PUT')
-
-            <div class="row">
-                <div class="col-md-6 mb-3">
-                    <label for="firstname">First Name</label>
-                    <input type="text" class="form-control" name="firstname" value="{{ $user->firstname }}">
+            <form action="{{ route('users.update', $user->id) }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                @method('PUT')
+            
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="firstname">First Name</label>
+                        <input type="text" class="form-control" name="firstname" value="{{ $user->firstname }}">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="lastname">Last Name</label>
+                        <input type="text" class="form-control" name="lastname" value="{{ $user->lastname }}">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="email">Email</label>
+                        <input type="email" class="form-control" name="email" value="{{ $user->email }}">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="new_password">New Password</label>
+                        <input type="password" class="form-control" name="new_password">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="confirm_new_password">Confirm New Password</label>
+                        <input type="password" class="form-control" name="confirm_new_password">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="role">Role</label>
+                        <select name="role" class="form-control">
+                            <option value="0" {{ old('role', $user->role) == 0 ? 'selected' : '' }}>User</option>
+                            <option value="1" {{ old('role', $user->role) == 1 ? 'selected' : '' }}>Admin</option>
+                        </select>
+                    </div>
+                    <div class="col-md-12">
+                        <button type="submit" class="btn btn-primary">Update</button>
+                    </div>
                 </div>
-                <div class="col-md-6 mb-3">
-                    <label for="lastname">Last Name</label>
-                    <input type="text" class="form-control" name="lastname" value="{{ $user->lastname }}">
-                </div>
-                <div class="col-md-6 mb-3">
-                    <label for="email">email</label>
-                    <input type="email" class="form-control" name="email" value="{{ $user->email }}">
-                </div>
-                <div class="col-md-6 mb-3">
-                    <label for="password">password</label>
-                    <input type="password" class="form-control" name="password" value="{{ $user->password }}">
-                </div>
-                <div class="col-md-6 mb-3">
-                    <label for="role">Role</label>
-                    <input type="number" name="role" value="{{ old('role', $user->role) }}" min="0" max="1" step="1">
-                </div>
-                <div class="col-md-12">
-                    <button type="submit" class="btn btn-primary">Update</button>
-                </div>
-            </div>
-        </form>
+            </form>
+            
 
         </div>
     </div>

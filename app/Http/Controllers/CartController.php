@@ -1,18 +1,20 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use App\Models\Cart;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 
-
-
-
-
 class CartController extends Controller
 {
+    public function index()
+    {
+        $cartItems = Cart::getContent();
+        return view('cart.index', compact('cartItems'));
+    }
+
     public function addToCart(Request $request)
     {
         $productId = $request->input('product_id');
@@ -25,5 +27,13 @@ class CartController extends Controller
         Cart::add($product->id, $product->name, 1, $product->cost);
 
         return response()->json(['message' => 'Product added to cart']);
+    }
+
+    public function removeFromCart(Request $request)
+    {
+        $productId = $request->input('product_id');
+        Cart::remove($productId);
+
+        return response()->json(['message' => 'Product removed from cart']);
     }
 }
