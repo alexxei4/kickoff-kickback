@@ -32,9 +32,11 @@ class Product extends Model
     {
         return $this->hasMany(Size::class, 'product_id');
     }
-    public function wishlist()
+    public function wishlistedBy()
     {
-        return $this->belongsToMany(Product::class, 'wishlist', 'user_id', 'product_id')->withTimestamps();
+        return $this->belongsToMany(User::class, 'wishlists', 'product_id', 'user_id')->withTimestamps();
     }
+
+   
     
 }

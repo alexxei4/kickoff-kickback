@@ -17,10 +17,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
         <!-- Bootstrap CSS (Add this to the <head> section of your layout file) -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" rel="stylesheet">
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 
 
@@ -71,11 +71,9 @@
                                 <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
                             </button>
                             &nbsp;
-                            <button class="btn btn-outline-dark flex-shrink-0" type="button">
-                               <a class="nav-link" href="{{ route('wishlist.index') }}">Wishlist</a>
-                               
-                                <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
-                            </button>
+                            <a href="{{ route('wishlist.index') }}" class="btn btn-outline-dark flex-shrink-0">
+                                Wishlist <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
+                            </a>
                         </div>
                     @endauth
                 </div>

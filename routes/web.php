@@ -24,8 +24,6 @@ Route::post('/wishlist/add', [WishlistController::class, 'addToWishlist'])->name
 Route::post('/wishlist/remove', [WishlistController::class, 'removeFromWishlist'])->name('wishlist.remove');
 
 //Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
-
-// Authentication routes
 Auth::routes();
 Route::get('/products/{product}', [FrontEndController::class, 'showProduct'])->name('frontend.product.show');
 Route::post('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');

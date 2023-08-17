@@ -14,25 +14,26 @@ class WishlistController extends Controller
 {
     public function index()
     {
+        
         $user = Auth::user();
-        $wishlistItems = $user->wishlist; 
+        $wishlistItems = $user->wishlist;
+        $wishlistItemCount = $wishlistItems->count();
+        return view('wishlist.index', compact('wishlistItems','wishlistItemCount'));
 
-        return view('wishlist.index', compact('wishlistItems'));
     }
 
     public function addToWishlist(Request $request)
-    {
-        
-        $user = Auth::user();
-        $productId = $request->input('product_id');
+{
+    $user = Auth::user();
+    $productId = $request->input('product_id');
 
-        if (!$user->wishlist->contains($productId)) {
-            $user->wishlist()->attach($productId);
-        }
-    
-
-        return response()->json(['message' => 'Product added to wishlist']);
+    if (!$user->wishlist->contains($productId)) {
+        $user->wishlist()->attach($productId);
     }
+
+    return response()->json(['message' => 'Product added to wishlist']);
+}
+
 
     public function removeFromWishlist(Request $request)
     {

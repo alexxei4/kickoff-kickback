@@ -11,31 +11,8 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
-        <!--<link href="css/styles.css" rel="stylesheet" /> -->
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script>
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
         
-            $(document).ready(function() {
-                @auth
-                $('#addToWishlistButton').on('click', function() {
-                    var productId = $(this).data('product-id');
-                    $.post('{{ route('wishlist.add') }}', { product_id: productId }, function(response) {
-                        alert(response.message);
-                    });
-                });
-                @else
-                $('.addToWishlistButton').on('click', function() {
-                    window.location.href = '{{ route('login') }}';
-                });
-                @endauth
-               
-            });
-        </script>
+        
         
         
     </head>
@@ -64,10 +41,10 @@
                                 Add to Cart
                             </button>
                             &nbsp;
-                            <button id="addToWishlistButton"class="btn btn-outline-dark flex-shrink-0" type="button" data-product-id="{{ $product->id }}">
-                                <i class="bi bi-heart"></i>
-                                Add to Wishlist
+                            <button id="addToWishlistButton" class="btn btn-outline-dark flex-shrink-0" type="button" data-product-id="{{ $product->id }}">
+                                <i class="bi bi-heart"></i> Add to Wishlist
                             </button>
+                            
                         </div>
                     </div>
                 </div>
@@ -181,6 +158,30 @@
                 </div>
             </div>
         </section>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+        
+            $(document).ready(function() {
+                @auth
+                $('#addToWishlistButton').on('click', function() {
+                    var productId = $(this).data('product-id');
+                    $.post('{{ route('wishlist.add') }}', { product_id: productId }, function(response) {
+                        alert(response.message);
+                    });
+                });
+                @else
+                $('#addToWishlistButton').on('click', function() { // Change selector to button ID
+                    window.location.href = '{{ route('login') }}';
+                });
+                @endauth
+            });
+
+        </script>
     </body>
 </html>
 @endsection

@@ -10,6 +10,8 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
+    
+
     use HasApiTokens, HasFactory, Notifiable;
 
     /**
@@ -44,8 +46,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-     public function wishlistedBy()
+
+
+    public function wishlist()
     {
-        return $this->belongsToMany(User::class, 'wishlists', 'product_id', 'user_id')->withTimestamps();
+        return $this->belongsToMany(Product::class, 'wishlists', 'user_id', 'product_id')->withTimestamps();
     }
+    
 }
