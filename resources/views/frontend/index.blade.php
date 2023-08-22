@@ -12,26 +12,21 @@
                     <option value="{{ $category->id }}">{{ $category->name }}</option>
                 @endforeach
             </select>
+            <label for="productNameFilter" class="block text-gray-700 font-bold mb-2">Search by Name:</label>
+            <input type="text" id="productNameFilter" class="border rounded px-3 py-2 w-full">
+            <label for="brandNameFilter" class="block text-gray-700 font-bold mb-2">Search by BrandName:</label>
+            <input type="text" id="brandNameFilter" class="border rounded px-3 py-2 w-full">
+            <label for="minCostFilter" class="block text-gray-700 font-bold mb-2">Min:</label>
+            <input type="text" id="minCostFilter" class="border rounded px-3 py-2 w-full">
+            <label for="maxCostFilter" class="block text-gray-700 font-bold mb-2">Max:</label>
+            <input type="text" id="maxCostFilter" class="border rounded px-3 py-2 w-full">
         </div>
         
-         <div class="grid grid-cols-3 gap-4" id="filteredProducts">
-            
-            <!-- Loop through and display the products here -->
-            @foreach($products as $product)
-            <a href="{{ route('frontend.product.show', $product) }}" style=" text-decoration: none;color: black;" >
-                <div class="p-4 border rounded-lg">
-                
-                <h2 class="text-xl font-semibold">{{ $product->name }}</h2>
-                    <p class="text-gray-600">{{ $product->description }}</p>
-                    <p class="mt-2 text-gray-800">${{ $product->cost }}</p>
-                    @if ($product->image)
-                        <img src="{{ asset('assets/uploads/product/' . $product->image) }}" alt="{{ $product->name }}" class="mt-4 rounded-lg" style="width: 200px;">
-                    @else
-                        <p class="mt-4">No image available</p>
-                    @endif
-                </div>
-            </a>
-            @endforeach
+        <div  id="filteredProducts"> 
+     
+            @include('frontend._products-list', ['products' => $products])
+
+       
         </div>
          
         
@@ -41,13 +36,40 @@
     <script>
         $(document).ready(function() {
             $('#categoryFilter').change(function() {
-                var categoryId = $(this).val();
-
-                $.get('{{ route("frontend.filter.products") }}', { category_id: categoryId }, function(data) {
+                filterProducts();
+            });
+    
+            $('#productNameFilter').keyup(function() {
+                filterProducts();
+            });
+    
+            $('#minCostFilter, #maxCostFilter').change(function() {
+                filterProducts();
+            });
+    
+            $('#brandNameFilter').keyup(function() {
+                filterProducts();
+            });
+    
+            function filterProducts() {
+                var categoryId = $('#categoryFilter').val();
+                var searchQuery = $('#productNameFilter').val();
+                var minCost = $('#minCostFilter').val();
+                var maxCost = $('#maxCostFilter').val();
+                var brandName = $('#brandNameFilter').val(); 
+    
+                $.get('{{ route("frontend.filter.products") }}', {
+                    category_id: categoryId,
+                    search: searchQuery,
+                    min_cost: minCost,
+                    max_cost: maxCost,
+                    brand_name: brandName 
+                }, function(data) {
                     $('#filteredProducts').html(data.html);
                 });
-            });
+            }
         });
     </script>
+    
 @endsection
 

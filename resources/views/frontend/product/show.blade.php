@@ -35,8 +35,8 @@
                         </div>
                         <p class="lead">{{ $product->description}}</p>
                         <div class="d-flex">
-                            <input class="form-control text-center me-3" id="inputQuantity" type="num" value="1" style="max-width: 3rem" />
-                            <button class="btn btn-outline-dark flex-shrink-0" type="button">
+                            <input class="form-control text-center me-3" id="inputQuantity" type="number" value="1" style="max-width: 3rem" />
+                            <button id="addToCartButton" class="btn btn-outline-dark flex-shrink-0" type="button">
                                 <i class="bi-cart-fill me-1"></i>
                                 Add to Cart
                             </button>
@@ -50,6 +50,7 @@
                 </div>
             </div>
         </section>
+
         <section class="py-5 bg-light">
             <div class="container px-4 px-lg-5 mt-5">
                 <h2 class="fw-bolder mb-4">Related products</h2>
@@ -135,9 +136,7 @@
                             <!-- Product details-->
                             <div class="card-body p-4">
                                 <div class="text-center">
-                                    <!-- Product name-->
                                     <h5 class="fw-bolder">Popular Item</h5>
-                                    <!-- Product reviews-->
                                     <div class="d-flex justify-content-center small text-warning mb-2">
                                         <div class="bi-star-fill"></div>
                                         <div class="bi-star-fill"></div>
@@ -145,11 +144,9 @@
                                         <div class="bi-star-fill"></div>
                                         <div class="bi-star-fill"></div>
                                     </div>
-                                    <!-- Product price-->
                                     $40.00
                                 </div>
                             </div>
-                            <!-- Product actions-->
                             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                                 <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a></div>
                             </div>
@@ -175,7 +172,23 @@
                     });
                 });
                 @else
-                $('#addToWishlistButton').on('click', function() { // Change selector to button ID
+                $('#addToWishlistButton').on('click', function() { 
+                    window.location.href = '{{ route('login') }}';
+                });
+                @endauth
+            });
+            $(document).ready(function() {
+                @auth
+                /*
+                $('#addToCartButton').on('click', function() {
+                    var productId = $(this).data('product-id');
+                    $.post('{{ route('cart.add') }}', { product_id: productId }, function(response) {
+                        alert(response.message);
+                    });
+                });
+                */
+                @else
+                $('#addToCartButton').on('click', function() { 
                     window.location.href = '{{ route('login') }}';
                 });
                 @endauth
