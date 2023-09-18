@@ -6,10 +6,8 @@
     <div class="container mx-auto py-8 text-center">
         <h1 class="text-4xl font-semibold text-black-600">Welcome to KickOffKickBack</h1>
 
-        <div class="container mx-auto py-8 text-center">
-        <h1 class="text-4xl font-semibold text-black-600">Welcome to KickOffKickBack</h1>
+       
 
-        <!-- Bootstrap Carousel -->
         <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
                 @foreach($products as $product)
@@ -28,7 +26,7 @@
             </button>
         </div>
 
-        <!-- OwlCarousel -->
+       
         <div class="owl-carousel owl-theme">
             @foreach($products as $product)
                 <div class="item">
@@ -38,24 +36,28 @@
         </div>
     </div>
 
-        <!-- Featured Products -->
+     
         <div class="my-8">
             <h2 class="text-2xl font-semibold">Featured Products</h2>
             <div class="flex items-center space-x-4">
                 @foreach($products as $product)
                     @if($product->is_featured)
                         <div class="w-1/5">
+                            <a  style="text-decoration:none; color:black;" href="{{ route('frontend.product.show', $product->id) }}">
                             <img src="{{ asset('assets/uploads/product/'.$product->image) }}" alt="{{ $product->name }}" class="carousel-image">
                             <h3 class="text-lg">{{ $product->name }}</h3>
+                           
+                            <p>Price: ${{ $product->cost }}</p>
+                             </a>
                         </div>
                     @endif
                 @endforeach
             </div>
         </div>
 
-        <!-- Other Content -->
+      
 
-        <!-- OwlCarousel JS Initialization Script -->
+       
         <script>
             $(document).ready(function(){
                 $('.owl-carousel').owlCarousel({

@@ -93,16 +93,16 @@
     </header>
 
     <main class="container mx-auto py-8">
-        <!-- Add the main content of your pages here -->
+    
         @yield('content')
     </main>
 
     <footer class="bg-gray-200 py-4 text-center">
-        <!-- Add your footer content here -->
+    
         &copy; {{ date('Y') }} KickOffKickBack. All rights reserved.
     </footer>
 
-    <!-- Add your JavaScript files here if needed -->
+
 </body>
 
 </html>

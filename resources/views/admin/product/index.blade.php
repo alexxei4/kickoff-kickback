@@ -16,7 +16,7 @@
                 @else
                     <p>No image available</p>
                 @endif
-                <!-- Add other product details if needed -->
+
             </li>
         @endforeach
     </ul>

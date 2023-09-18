@@ -1,4 +1,4 @@
-@extends('auth.app')
+@extends('layouts.frontendlayout')
 
 @section('content')
 <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -63,10 +63,10 @@
                                 </button>
 
                                 @if (Route::has('password.request'))
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
-                                        {{ __('Forgot Your Password?') }}
-                                    </a>
-                                @endif
+                                <button type="button" class="btn btn-link" onclick="location.href='{{ route('password.request') }}'">
+                                    {{ __('Forgot Your Password?') }}
+                                </button>
+                            @endif
                             </div>
                         </div>
                     </form>

@@ -8,6 +8,7 @@ use App\Models\Product;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\WishlistController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\Auth\ResetPasswordController;
 
 
 Route::get('/', function () {
@@ -31,15 +32,19 @@ Route::get('/products/{product}', [FrontEndController::class, 'showProduct'])->n
 Route::post('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
 Route::get('/', [FrontEndController::class, 'showAllProducts'])->name('frontend.index');
 Route::get('/filter-products', [FrontEndController::class, 'filterProducts'])->name('frontend.filter.products');
-Route::get('password/reset', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
+Route::post('password/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+Route::get('password/request', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
+Route::get('password/request/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
+Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('password.update');
 
 
-// Protected routes for authenticated users with admin privileges
+
+
 Route::middleware(['auth', 'isAdmin'])->group(function () {
 
 
 
-    // Admin dashboard
+   
     Route::get('/dashboard', function () {
         return view('auth.admin');
     });
@@ -51,7 +56,6 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
     Route::put('/users/{user}', [App\Http\Controllers\Admin\AdminController::class,'update'])->name('users.update');
     Route::delete('/users/{user}',[App\Http\Controllers\Admin\AdminController::class,'destroy'])->name('users.destroy');
 
-    // Categories
     Route::get('/admin', [AdminController::class, 'index'])->name('admin.dashboard');
     Route::get('/categories', [CategoryController::class, 'index'])->name('categories');
     Route::get('/add-category', function () {
@@ -62,7 +66,7 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
     Route::put('update-category/{category}', [CategoryController::class, 'update'])->name('update.category');
     Route::delete('delete-category/{category}', [CategoryController::class, 'destroy'])->name('category.destroy');
 
-    // Products
+  
     Route::get('/products', [ProductController::class, 'index'])->name('products');
     Route::post('/add-product', [ProductController::class, 'insert'])->name('add.product');
     Route::get('/add-product', function () {

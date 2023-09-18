@@ -13,5 +13,4 @@
         <p>No image available</p>
     @endif
 
-    <!-- Add other product details as needed -->
 @endsection
