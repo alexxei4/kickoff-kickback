@@ -54,10 +54,16 @@
         </a>
       </li>
       <li class="{{ request()->is('admin') ? 'active' : '' }}">
-        <a href="{{ route('logout') }}">
-          <i class="nc-icon nc-button-power"></i>
-            <p>Logout</p>
+        <a>
+          <form method="POST" action="{{ route('logout') }}">
+            @csrf
+            <button type="submit" class="text-black-600">Logout</button>
+            
+            <i class="nc-icon nc-button-power"></i>
+            
+          </form>
         </a>
+         
       </li>
         <li class="{{ request()->is('admin') ? 'active' : '' }}">
             <a href="{{ url('/dashboard') }}">
