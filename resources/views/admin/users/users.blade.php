@@ -75,4 +75,9 @@
         });
     });
 </script>
+@if(session('success'))
+    <script>
+        swal("Success!", "{!! session('success') !!}", "success");
+    </script>
+@endif
 
