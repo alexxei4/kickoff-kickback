@@ -48,13 +48,13 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
     Route::get('/dashboard', function () {
         return view('auth.admin');
     });
-    Route::get('/sales', [App\Http\Controllers\Admin\AdminController::class,'sales'])->name('admin.sales');
+    Route::get('/sales', [App\Http\Controllers\Admin\AdminController::class,'sales'])->name('admin.sales.index');
     Route::get('/users', [App\Http\Controllers\Admin\AdminController::class,'users'])->name('admin.users.users');  
 
 
     Route::get('/users/{user}/edit', [App\Http\Controllers\Admin\AdminController::class,'edit'])->name('users.edit');
     Route::put('/users/{user}', [App\Http\Controllers\Admin\AdminController::class,'update'])->name('users.update');
-    Route::delete('/users/{user}',[App\Http\Controllers\Admin\AdminController::class,'destroy'])->name('users.destroy');
+    Route::delete('/delete-user/{user}/',[App\Http\Controllers\Admin\AdminController::class,'destroy'])->name('users.destroy');
 
     Route::get('/admin', [AdminController::class, 'index'])->name('admin.dashboard');
     Route::get('/categories', [CategoryController::class, 'index'])->name('categories');

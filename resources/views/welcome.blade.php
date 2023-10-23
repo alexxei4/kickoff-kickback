@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="container mx-auto py-8 text-center">
-        <h1 class="text-4xl font-semibold text-black-600">Welcome to KickOffKickBack</h1>
+        <h1 class="text-4xl font-semibold text-black-600">Welcome to KickOff-KickBack</h1>
 
        
 
@@ -30,7 +30,7 @@
         <div class="owl-carousel owl-theme">
             @foreach($products as $product)
                 <div class="item">
-                    <img src="{{ asset('assets/uploads/product/'.$product->image) }}" alt="{{ $product->name }}" class="carousel-image">
+                    <img src="{{ asset('/public/assets/uploads/product/'.$product->image) }}" alt="{{ $product->name }}" class="carousel-image">
                 </div>
             @endforeach
         </div>
@@ -84,15 +84,15 @@
         </script>
     </div>
 
-    <!-- OwlCarousel CSS -->
+   
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
 @endsection
 
 <style>
-    /* Add this to your existing CSS file or create a new one */
+  
     .carousel-image {
-        height: 200px; /* Set the desired height for the carousel images */
-        object-fit: cover; /* Maintain aspect ratio and crop extra parts */
+        height: 200px; 
+        object-fit: cover; 
     }
 </style>

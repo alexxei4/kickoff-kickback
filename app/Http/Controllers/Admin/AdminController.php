@@ -21,8 +21,8 @@ class AdminController extends Controller
 
     public function sales()
     {
-        // Fetch sales/analytics data here
-        return view('admin.sales'); // Create a corresponding view file
+       
+        return view('admin.sales.index');
     }
 
     public function users()
@@ -30,7 +30,7 @@ class AdminController extends Controller
         $users = User::all(); // Fetch user data
         return view('admin.users.users', compact('users')); // Create a corresponding view file
     }
-    // AdminController.php or UserController.php
+  
 
     public function edit(User $user)
     {
@@ -43,8 +43,8 @@ class AdminController extends Controller
         'firstname' => 'required|string|max:255',
         'lastname' => 'required|string|max:255',
         'email' => 'required|email',
-        'new_password' => 'nullable|string|max:255', // Remove 'required'
-        'confirm_new_password' => 'nullable|string|max:255|same:new_password', // Add 'confirmed'
+        'new_password' => 'nullable|string|max:255',
+        'confirm_new_password' => 'nullable|string|max:255|same:new_password', 
         'role' => 'required|integer|between:0,1',
     ]);
 
@@ -63,7 +63,7 @@ class AdminController extends Controller
     {
         $user->delete();
 
-        return redirect()->route('user')->with('success', 'User deleted successfully!');
+        return redirect()->route('admin.users.users')->with('success', 'User deleted successfully!');
     }
 
 

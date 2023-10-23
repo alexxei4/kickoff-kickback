@@ -3,6 +3,22 @@
 @section('title', 'Users')
 
 @section('content')
+<head>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.delete-user').on('click', function(e) {
+            e.preventDefault();
+
+            if (confirm('Are you sure you want to delete this user?')) {
+                
+                $(this).closest('form').submit();
+            }
+        });
+    });
+</script>
+
+</head>
 
 <style>
     .actions-btns {

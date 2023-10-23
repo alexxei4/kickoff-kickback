@@ -28,10 +28,9 @@
 
 <body class="bg-gray-100">
     <header class="bg-white shadow">
-        <!-- Add your header content here -->
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container px-4 px-lg-5">
-                <a href="{{ route('home') }}" class="text-2xl font-bold text-black-600"> <img src="{{ asset('images/KickOffKickBack.png') }}" alt="My Store Logo" width="100" height="100"></a>
+                <a href="{{ route('home') }}" class="text-2xl font-bold text-black-600"> <img src="{{ asset('/public/images/KickOffKickBack.png') }}" alt="My Store Logo" width="100" height="100"></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">

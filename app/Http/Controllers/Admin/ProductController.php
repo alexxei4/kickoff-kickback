@@ -81,16 +81,15 @@ class ProductController extends Controller
                 $product->save();
             }
 
-            // Redirect the user back to the form with a success message
+            
             return redirect()->route('admin.product.add-product')->with('success', 'Product added successfully!');
         }
 
     public function edit(Product $product)
     {
        
-        $categories = Category::all(); // Fetch all categories from the database
+        $categories = Category::all(); 
 
-        // Pass the $product and $categories variables to the view
         return view('admin.product.edit-product', compact('product', 'categories'));
     }
 

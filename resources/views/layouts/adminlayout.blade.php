@@ -18,9 +18,11 @@
   <!-- CSS Files -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-  <link href="../assets/bootstrap.min.css" rel="stylesheet" />
-  <link href="../assets/css/paper-dashboard.css?v=2.0.1" rel="stylesheet" />
-  <link href="{{ asset('css/paper-dashboard.css') }}" rel="stylesheet">
+  <link href="{{ asset( '/public/assets/bootstrap.min.css')}}" rel="stylesheet" />
+  <link href="{{ asset('/public/css/paper-dashboard.css') }}?v=2.0.1" rel="stylesheet" />
+  
+  <link href="{{ asset('/public/css/paper-dashboard.css') }}" rel="stylesheet">
+
   
 </head>
 
@@ -36,7 +38,7 @@
       
     <ul class="nav">
       <li class="{{ request()->is('sales') ? 'active' : '' }}">
-        <a href="{{ route('admin.sales') }}">
+        <a href="{{ route('admin.sales.index') }}">
             <i class="nc-icon nc-chart-bar-32"></i>
             <p>Sales/Analytics</p>
         </a>

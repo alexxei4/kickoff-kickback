@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container mx-auto">
-        <h1 class="text-3xl font-bold mb-4">Welcome to KickOffKickBack!</h1>
+        <h1 class="text-3xl font-bold mb-4">Welcome to KickOff-KickBack!</h1>
 
         <div class="mb-4">
             <label for="categoryFilter" class="block text-gray-700 font-bold mb-2">Filter by Category:</label>

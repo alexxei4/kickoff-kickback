@@ -7,7 +7,7 @@
         <div>
             <h2>{{ $item->name }}</h2>
             <p>{{ $item->description }}</p>
-            <img src="{{ asset('assets/uploads/product/' . $item->image) }}" alt="{{ $item->name }}" width="150">
+            <img src="{{ asset('/public/assets/uploads/product/' . $item->image) }}" alt="{{ $item->name }}" width="150">
             <form action="{{ route('wishlist.remove') }}" method="POST">
                 @csrf
                 <input type="hidden" name="product_id" value="{{ $item->id }}">

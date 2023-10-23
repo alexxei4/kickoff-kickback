@@ -12,7 +12,7 @@
                 <p>Price: ${{ $product->cost }}</p>
                 <p>Description: {{ $product->description }}</p>
                 @if ($product->image)
-                    <img src="{{ asset('assets/uploads/product/' . $product->image) }}" alt="{{ $product->name }}" style="width: 200px;">
+                    <img src="{{ asset('/public/assets/uploads/product/' . $product->image) }}" alt="{{ $product->name }}" style="width: 200px;">
                 @else
                     <p>No image available</p>
                 @endif

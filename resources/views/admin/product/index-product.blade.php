@@ -42,7 +42,7 @@
             <td>{{ $product->quantity }}</td>
             <td>{{ $product->description }}</td>
             <td>
-                <img src="{{ asset('assets/uploads/product/'.$product->image) }}" alt="Image" style="width: 100px; height: 100px;">
+                <img src="{{ asset('/public/assets/uploads/product/'.$product->image) }}" alt="Image" style="width: 100px; height: 100px;">
             </td>
             <td>{{ $product->is_featured ? 'Yes' : 'No' }}</td>
             <td>{{ $product->is_available ? 'Yes' : 'No' }}</td>
