@@ -20,7 +20,9 @@ class Product extends Model
         'is_featured',
         'is_available',
         'brand',
+        'size',
         'sku',
+      
     ];
 
     public function category()
@@ -34,7 +36,12 @@ class Product extends Model
     }
     public function wishlistedBy()
     {
-        return $this->belongsToMany(User::class, 'wishlists', 'product_id', 'user_id')->withTimestamps();
+        return $this->belongsToMany(User::class, 'wishlists', 'product_id', 'sku', 'user_id')->withTimestamps();
+    }
+
+    public function skus()
+    {
+        return $this->hasMany(Sku::class);
     }
 
    

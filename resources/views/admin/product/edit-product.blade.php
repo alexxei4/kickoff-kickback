@@ -48,7 +48,15 @@
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="sku">SKU</label>
-                    <input type="text" class="form-control" name="sku" value="{{ $product->sku }}">
+                    @if ($product->sku)
+                        <input type="text" class="form-control" name="sku" value="{{ $product->sku }}" readonly>
+                    @else
+                        <input type="text" class="form-control" name="sku" value="{{ $generatedSku }}" readonly>
+                    @endif
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="size">Size</label>
+                    <input type="text" class="form-control" name="size" value="{{ $product->size }}">
                 </div>
                 <div class="col-md-12 mb-3">
                     <label for="is_featured">Is Featured</label>

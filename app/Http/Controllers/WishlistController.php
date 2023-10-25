@@ -42,6 +42,6 @@ class WishlistController extends Controller
 
         $user->wishlist()->detach($productId);
 
-        return response()->json(['message' => 'Product removed from wishlist']);
+        return redirect()->route('wishlist.index')->with('success', 'Product removed from wishlist');
     }
 }

@@ -11,6 +11,7 @@
                 <a href="{{ route('product.show', $product->id) }}">{{ $product->name }}</a>
                 <p>Price: ${{ $product->cost }}</p>
                 <p>Description: {{ $product->description }}</p>
+                <p>SKU: ${{ $product->sku }}</p>
                 @if ($product->image)
                     <img src="{{ asset('/public/assets/uploads/product/' . $product->image) }}" alt="{{ $product->name }}" style="width: 200px;">
                 @else

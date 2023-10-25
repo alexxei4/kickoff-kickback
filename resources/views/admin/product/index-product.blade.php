@@ -29,6 +29,8 @@
                 <th>Is Available</th>
                 <th>Brand</th>
                 <th>SKU</th>
+                <th>Size</th>
+                <th>Color</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -48,6 +50,8 @@
             <td>{{ $product->is_available ? 'Yes' : 'No' }}</td>
             <td>{{ $product->brand }}</td>
             <td>{{ $product->sku }}</td>
+            <td>{{ $product->size }}</td>
+            <td>{{ $product->color }}</td>
             <td><a href="{{ route('edit.product', $product->id) }}" class="btn btn-primary"><i class="nc-icon nc-ruler-pencil"></i></a> </td>
             <td>
 

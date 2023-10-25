@@ -56,8 +56,12 @@
                      <input type="text" class="form-control" name="brand">
                 </div>
                 <div class ="col-md-6 mb-3">
-                     <label for="sku">SKU</label>
-                     <input type="text" class="form-control" name="sku" required>
+                     <label for="size">Size</label>
+                     <input type="text" class="form-control" name="size" required>
+                </div>
+                <div class ="col-md-6 mb-3">
+                     <label for="color">Color</label>
+                     <input type="text" class="form-control" name="color" required>
                 </div>
                 <div class ="col-md-12">
                     <button type="submit" class="btn btn-primary">Submit</button>

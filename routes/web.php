@@ -76,4 +76,6 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
     Route::get('edit-product/{product}', [ProductController::class, 'edit'])->name('edit.product');
     Route::put('update-product/{product}', [ProductController::class, 'update'])->name('update.product');
     Route::delete('delete-product/{product}', [ProductController::class, 'destroy'])->name('admin.product.delete-product');
+    Route::get('/generate-sku/{category}/{brand}/{size}/{color}', [SKUController::class, 'generateSKU'])->name('generateSKU');
+
 });

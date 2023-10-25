@@ -12,7 +12,7 @@
             <div class="carousel-inner">
                 @foreach($products as $product)
                     <div class="carousel-item {{ $loop->first ? 'active' : '' }}">
-                        <img src="{{ asset('assets/uploads/product/'.$product->image) }}" class="d-block w-100 carousel-image" alt="{{ $product->name }}">
+                        <img src="{{ asset('/public/assets/uploads/product/'.$product->image) }}" class="d-block w-100 carousel-image" alt="{{ $product->name }}">
                     </div>
                 @endforeach
             </div>
@@ -44,7 +44,7 @@
                     @if($product->is_featured)
                         <div class="w-1/5">
                             <a  style="text-decoration:none; color:black;" href="{{ route('frontend.product.show', $product->id) }}">
-                            <img src="{{ asset('assets/uploads/product/'.$product->image) }}" alt="{{ $product->name }}" class="carousel-image">
+                            <img src="{{ asset('/public/assets/uploads/product/'.$product->image) }}" alt="{{ $product->name }}" class="carousel-image">
                             <h3 class="text-lg">{{ $product->name }}</h3>
                            
                             <p>Price: ${{ $product->cost }}</p>

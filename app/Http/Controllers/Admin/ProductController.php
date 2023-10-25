@@ -38,15 +38,17 @@ class ProductController extends Controller
                 'slug' => 'required|string',
                 'description' => 'required|string',
                 'cost' => 'required|numeric',
+                'color' => 'required|string',
                 'quantity' => 'required|integer',
                 'image' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
                 'is_featured' =>  'nullable|boolean',
                 'is_available' => 'nullable|boolean',
                 'brand' => 'required|string',
-                'sku' => 'required|unique:products|string',
+                'size' => 'required_if:category_id,5,6,8|string', 
+                'color' => 'required|string',
             ]);
 
-            // Create a new product instance and set the attributes
+           
             $product = new Product();
             $product->category_id = $request->input('category_id');
             $product->name = $request->input('name');
@@ -58,16 +60,31 @@ class ProductController extends Controller
             $product->is_featured = $request->filled('is_featured');
             $product->is_available = $request->filled('is_available');
             $product->brand = $request->input('brand');
-            $product->sku = $request->input('sku');
+            $product->size = $request->input('size');
+            $product->color = $request->input('color');
+            $sku = Str::slug($request->input('name')). '-' . $request->input('size') . '-' . $request->input('color')  . '-' . rand(1000, 9999);
             
             $slug = Str::slug($product->name); 
 
             $product->slug = $slug;
 
-            // Save the product to the database
+            $product->sku = $sku;
             $product->save();
+            // This is the Variations section , most E Commerce Applications use an SKU Ordering system
+            // For example if its the jersey of the same team but one is home and one is away
+            // you have to add a variation ( Color = black , Size = XL etc. etc.)
+            if ($request->has('variations')) {
+                $variations = $request->input('variations');
+                foreach ($variations as $variationData) {
+                    $variation = new Variation();
+                    $variation->product_id = $product->id;
+                    $variation->size = $variationData['size'];
+                    $variation->color = $variationData['color'];
+                    $variation->sku = $this->generateSku($product, $variationData['size'], $variationData['color']);
+                    $variation->save();
+                }
+            }
 
-            // Handle the image upload after saving the product
             if ($request->hasFile('image')) {
                 $image = $request->file('image');
                 $imageName = time() . '.' . $image->getClientOriginalExtension();
@@ -108,6 +125,8 @@ class ProductController extends Controller
             'is_available' =>  'nullable|boolean',
             'brand' => 'required|string',
             'sku' => 'required|string|unique:products,sku,' . $product->id,
+            'size' => 'required_if:category_id,5,6,8|string', 
+            'color' => 'required|string',
         ]);
 
         $product->category_id = $request->input('category_id');
@@ -120,6 +139,23 @@ class ProductController extends Controller
         $product->is_available = $request->filled('is_available') ? true : null;
         $product->brand = $request->input('brand');
         $product->sku = $request->input('sku');
+        $product->size = $request->input('size');
+        $product->color = $request->input('color');
+
+        // This is the Variations section , most E Commerce Applications use an SKU Ordering system
+            // For example if its the jersey of the same team but one is home and one is away
+            // you have to add a variation ( Color = black , Size = XL etc. etc.)
+            if ($request->has('variations')) {
+                $variations = $request->input('variations');
+                foreach ($variations as $variationData) {
+                    $variation = new Variation();
+                    $variation->product_id = $product->id;
+                    $variation->size = $variationData['size'];
+                    $variation->color = $variationData['color'];
+                    $variation->sku = $this->generateSku($product, $variationData['size'], $variationData['color']);
+                    $variation->save();
+                }
+            }
         
         if ($request->hasFile('image')) {
             $image = $request->file('image');
@@ -134,10 +170,9 @@ class ProductController extends Controller
         }
         
 
-        // Save the updated product to the database
         $product->save();
 
-        // Redirect the user back to the products list with a success message
+     
         return redirect()->route('products')->with('success', 'Product updated successfully!');
     }
 
@@ -148,6 +183,9 @@ class ProductController extends Controller
 
         return redirect()->route('products')->with('success', 'Product deleted successfully!');
     }
+
+    
+    
     
    
 
