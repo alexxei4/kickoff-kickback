@@ -36,16 +36,37 @@
                         <p class="lead">{{ $product->description}}</p>
                         <div class="d-flex">
                             <input class="form-control text-center me-3" id="inputQuantity" type="number" value="1" style="max-width: 3rem" />
-                            <button id="addToCartButton" class="btn btn-outline-dark flex-shrink-0" type="button">
+                            <button id="addToCartButton" class="btn btn-outline-dark flex-shrink-0" type="button" data-product-id="{{ $product->id }}">
                                 <i class="bi-cart-fill me-1"></i>
                                 Add to Cart
                             </button>
+
+
+                            
                             &nbsp;
                             <button id="addToWishlistButton" class="btn btn-outline-dark flex-shrink-0" type="button" data-product-id="{{ $product->id }}">
                                 <i class="bi bi-heart"></i> Add to Wishlist
                             </button>
                             
                         </div>
+                    </div>
+                    <div class="col-md-6">
+                    
+                            <ul>
+                                @if(isset($variations) && $variations->count() > 0)
+                                <h3>Variations:</h3>
+                                    @foreach ($variations as $variation)
+                                        <li>
+                                            <strong>Size:</strong> {{ $variation->size }}, 
+                                            <strong>Color:</strong> {{ $variation->color }}, 
+                                            <strong>SKU:</strong> {{ $variation->sku }}
+                                        </li>
+                                    @endforeach
+                                @else
+                                    <p></p>
+                                @endif
+                            </ul>
+
                     </div>
                 </div>
             </div>
@@ -179,14 +200,13 @@
             });
             $(document).ready(function() {
                 @auth
-                /*
                 $('#addToCartButton').on('click', function() {
                     var productId = $(this).data('product-id');
-                    $.post('{{ route('cart.add') }}', { product_id: productId }, function(response) {
+                    var quantity = $('#inputQuantity').val(); 
+                    $.post('{{ route('cart.add') }}', { product_id: productId, quantity: quantity }, function(response) {
                         alert(response.message);
                     });
                 });
-                */
                 @else
                 $('#addToCartButton').on('click', function() { 
                     window.location.href = '{{ route('login') }}';

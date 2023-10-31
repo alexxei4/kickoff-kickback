@@ -5,6 +5,12 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\FrontEndController;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\SKU;
+use App\Models\User;
+use App\Models\Variation;
+use App\Models\Wishlist;
+use App\Models\Cart;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\WishlistController;
 use App\Http\Controllers\CartController;
@@ -37,6 +43,11 @@ Route::get('password/request', [ForgotPasswordController::class, 'showLinkReques
 Route::get('password/request/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
 Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('password.update');
 
+Route::get('/product/{product}/variations', [ProductController::class, 'variations'])->name('product.variations');
+Route::post('/product/{product}/variations/add', [ProductController::class, 'addVariation'])->name('product.variations.add');
+Route::get('/product/{product}/variations/{variation}/edit', [ProductController::class, 'editVariation'])->name('product.variations.edit');
+Route::put('/product/{product}/variations/{variation}', [ProductController::class, 'updateVariation'])->name('product.variations.update');
+Route::delete('/product/{product}/variations/{variation}', [ProductController::class, 'deleteVariation'])->name('product.variations.delete');
 
 
 
@@ -79,3 +90,8 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
     Route::get('/generate-sku/{category}/{brand}/{size}/{color}', [SKUController::class, 'generateSKU'])->name('generateSKU');
 
 });
+Route::get('/profile/show', [ProfileController::class, 'show'])->name('profile.show');
+Route::get('/profile/upload', [ProfileController::class, 'showUploadForm'])->name('profile.upload'); // You can name this 'profile.uploadForm' for clarity.
+Route::post('/profile/upload', [ProfileController::class, 'uploadProfilePicture'])->name('profile.upload.post'); // Changed the name to 'profile.upload.post'.
+Route::get('/profile/edit', [ProfileController::class, 'showUpdateForm'])->name('profile.edit');
+Route::put('/profile/edit', [ProfileController::class, 'updateProfilePicture'])->name('profile.update');

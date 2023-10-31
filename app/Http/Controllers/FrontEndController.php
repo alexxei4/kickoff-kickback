@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\Cart;
 use Illuminate\Support\Facades\View;
 use Illuminate\Http\Request;
 
@@ -31,7 +32,7 @@ class FrontEndController extends Controller
 
     public function showAllProducts()
     {
-        $products = Product::all();
+        $products = Product::paginate(10);
         $categories = Category::all();
         return View::make('frontend.index', compact('products','categories'));
     }

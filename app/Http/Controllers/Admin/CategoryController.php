@@ -18,7 +18,7 @@ class CategoryController extends Controller
     }
     public function insert(Request $request)
     {
-        // Validate the form data
+    
         $validatedData = $request->validate([
             'name' => 'required',
             'slug' => 'required',
@@ -27,14 +27,14 @@ class CategoryController extends Controller
 
 
 
-        // Create a new category instance
+    
         $category = new Category();
         $category->name = $request->input('name');
         $category->slug = $request->input('slug');
         $category->description = $request->input('description');
         $category->save();
 
-        // Redirect back to the categories page or any other desired page
+       
         return redirect()->route('categories')->with('success', 'Category inserted successfully');
     }
 
@@ -54,7 +54,7 @@ class CategoryController extends Controller
           
 
 
-            // Update the category data
+    
             $category->name = $request->input('name');
             $category->slug = $request->input('slug');
             $category->description = $request->input('description');
@@ -66,10 +66,10 @@ class CategoryController extends Controller
 
     public function destroy(Category $category)
     {
-        // Delete the category
+    
         $category->delete();
 
-        // Redirect to the appropriate page after deleting the category
+        
         return redirect()->route('categories')->with('success', 'Category deleted successfully');
    
     }

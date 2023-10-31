@@ -39,6 +39,7 @@
                         <li class="nav-item"><a class="nav-link" href="/">Products</a></li>
                         @if (Route::has('login'))
                             @auth
+                            
                                 
                                 @if(Auth::user()->role === 1)
                                 <li class="nav-item">
@@ -54,6 +55,12 @@
                                         </form>
                                     </a>
                                 </li>
+                                <li class="nav-item ">
+                                    <a href="{{ route('profile.show') }}" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <img src="{{ asset('storage/app/public/' . Auth::user()->profile_picture) }}" alt="Profile Picture" width="45" height="45" class="rounded-circle">
+                                    </a>
+                                    
+                                </li>
                             @else
                                 <li class="nav-item">
                                     <a class = "nav-link" href="{{ route('login') }}" class="text-black-600">Log in</a>
@@ -64,6 +71,7 @@
                                         <a   class = "nav-link"  href="{{ route('register') }}" class="text-black-600">Register</a>
                                     </li>
                                 @endif
+                                
                         @endif
                         @endauth
 
@@ -73,7 +81,7 @@
                     @auth
                         <div class="d-flex">
                             
-                            <a href="" class="btn btn-outline-dark flex-shrink-0">
+                            <a href="{{ route('cart.index') }}" class="btn btn-outline-dark flex-shrink-0">
                                 Cart <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
                             </a>
                             &nbsp;
@@ -81,6 +89,7 @@
                                 Wishlist <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
                             </a>
                         </div>
+                        
                     @endauth
                     @if (Route::has('login'))
                    

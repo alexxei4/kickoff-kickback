@@ -1,11 +1,13 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-
+use App\Models\Variation;
+use App\Models\SKU;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\Cart;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
@@ -15,8 +17,10 @@ class ProductController extends Controller
 {
      public function showProduct(Product $product)
      {
-        $products = Product::all();
-        return View::make('frontendlayout.index', compact('products'));
+        
+        $variations = Variation::where('product_id', $product->id)->get();
+        return view('frontend.product.show', compact('product', 'variations'));
+        
      }
  
      public function showAllProducts()
@@ -183,6 +187,51 @@ class ProductController extends Controller
 
         return redirect()->route('products')->with('success', 'Product deleted successfully!');
     }
+
+    public function addVariation(Request $request, Product $product)
+    {
+        $validatedData = $request->validate([
+            'size' => 'required|string',
+            'color' => 'required|string',
+        ]);
+
+        $variation = new Variation();
+        $variation->product_id = $product->id;
+        $variation->size = $request->input('size');
+        $variation->color = $request->input('color');
+        $variation->sku = $this->generateSku($product, $variation->size, $variation->color);
+        $variation->save();
+
+        return redirect()->route('product.variations', $product)->with('success', 'Variation added successfully');
+    }
+    public function editVariation(Product $product, Variation $variation)
+    {
+        return view('variations.edit', compact('product', 'variation'));
+    }
+
+    public function updateVariation(Request $request, Product $product, Variation $variation)
+    {
+        $validatedData = $request->validate([
+            'size' => 'required|string',
+            'color' => 'required|string',
+        ]);
+
+        $variation->size = $request->input('size');
+        $variation->color = $request->input('color');
+        $variation->sku = $this->generateSku($product, $variation->size, $variation->color);
+        $variation->save();
+
+        return redirect()->route('product.variations', $product)->with('success', 'Variation updated successfully');
+    }
+    public function deleteVariation(Product $product, Variation $variation)
+    {
+        $variation->delete();
+
+        return redirect()->route('product.variations', $product)->with('success', 'Variation deleted successfully');
+    }
+
+
+
 
     
     
