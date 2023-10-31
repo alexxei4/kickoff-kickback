@@ -38,6 +38,10 @@ class Product extends Model
     {
         return $this->belongsToMany(User::class, 'wishlists', 'product_id', 'sku', 'user_id')->withTimestamps();
     }
+    public function variations()
+    {
+        return $this->hasMany(Variation::class);
+    }
 
     public function skus()
     {
