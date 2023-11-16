@@ -15,6 +15,8 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\WishlistController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\Auth\ResetPasswordController;
+use Illuminate\Support\Facades\Log;
+
 
 
 Route::get('/', function () {
@@ -33,6 +35,8 @@ Route::post('/wishlist/remove', [WishlistController::class, 'removeFromWishlist'
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
 Route::post('/cart/remove', [CartController::class, 'removeFromCart'])->name('cart.remove');
+Route::get('/cart/data', [CartController::class, 'getCartData'])->name('cart.data');
+Route::post('/cart/change-quantity', [CartController::class, 'changeQuantity'])->name('cart.change-quantity');
 Auth::routes();
 Route::get('/products/{product}', [FrontEndController::class, 'showProduct'])->name('frontend.product.show');
 Route::post('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
@@ -49,13 +53,12 @@ Route::get('/product/{product}/variations/{variation}/edit', [ProductController:
 Route::put('/product/{product}/variations/{variation}', [ProductController::class, 'updateVariation'])->name('product.variations.update');
 Route::delete('/product/{product}/variations/{variation}', [ProductController::class, 'deleteVariation'])->name('product.variations.delete');
 
-
-
+ Route::get('/profile/editLogo', [ProfileController::class, 'showUpdateLogoForm'])->name('profile.editLogo');
+ Route::put('/profile/updateLogo', [ProfileController::class, 'updateLogo'])->name('profile.updateLogo');
+ Route::get('/profile/showlogo', [ProfileController::class, 'showUpdateLogoForm'])->name('profile.showlogo');
+ 
 Route::middleware(['auth', 'isAdmin'])->group(function () {
-
-
-
-   
+ 
     Route::get('/dashboard', function () {
         return view('auth.admin');
     });
@@ -84,6 +87,7 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
         $categories = Category::all();
         return view('admin.product.add-product', compact('categories'));
     })->name('admin.product.add-product');
+    Route::post('/filter-products', [FrontEndController::class, 'filterProducts'])->name('frontend.filter.products');
     Route::get('edit-product/{product}', [ProductController::class, 'edit'])->name('edit.product');
     Route::put('update-product/{product}', [ProductController::class, 'update'])->name('update.product');
     Route::delete('delete-product/{product}', [ProductController::class, 'destroy'])->name('admin.product.delete-product');
@@ -91,7 +95,10 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
 
 });
 Route::get('/profile/show', [ProfileController::class, 'show'])->name('profile.show');
-Route::get('/profile/upload', [ProfileController::class, 'showUploadForm'])->name('profile.upload'); // You can name this 'profile.uploadForm' for clarity.
-Route::post('/profile/upload', [ProfileController::class, 'uploadProfilePicture'])->name('profile.upload.post'); // Changed the name to 'profile.upload.post'.
+Route::get('/profile/upload', [ProfileController::class, 'showUploadForm'])->name('profile.upload'); 
+Route::post('/profile/upload', [ProfileController::class, 'uploadProfilePicture'])->name('profile.upload.post'); 
 Route::get('/profile/edit', [ProfileController::class, 'showUpdateForm'])->name('profile.edit');
 Route::put('/profile/edit', [ProfileController::class, 'updateProfilePicture'])->name('profile.update');
+Route::get('/aboutus', function () {
+    return view('frontend.aboutus');
+})->name('frontend.aboutus');

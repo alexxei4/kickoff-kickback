@@ -9,10 +9,11 @@ use App\Models\Wishlist;
 use App\Http\Controllers\Controller;
 
 
-
+// this is the controller for the wishlistx
 
 class WishlistController extends Controller
 {
+    // this displays the wishlist 
     public function index()
     {
         
@@ -22,9 +23,9 @@ class WishlistController extends Controller
         return view('wishlist.index', compact('wishlistItems','wishlistItemCount'));
 
     }
-
+    // this helps with adding items to a wishlist
     public function addToWishlist(Request $request)
-{
+    {
     $user = Auth::user();
     $productId = $request->input('product_id');
 
@@ -32,10 +33,10 @@ class WishlistController extends Controller
         $user->wishlist()->attach($productId);
     }
 
-    return response()->json(['message' => 'Product added to wishlist']);
-}
+        return response()->json(['message' => 'Product added to wishlist']);
+    }
 
-
+    // this helps with removing item from the wishlist 
     public function removeFromWishlist(Request $request)
     {
         $user = Auth::user();

@@ -1,81 +1,150 @@
-@extends('layouts.frontendlayout') 
-
-@section('content')
-    <h1>Your Cart</h1>
+<html lang="en">
+<head>
+    <title>Your Cart</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     
-    @if ($cartItems->isEmpty())
-    <p>Your cart is empty.</p>
-    @else
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Price</th>
-                    <th>Quantity</th>
-                    <th>Total</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($cartItems as $item)
+</head>
+<body>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            console.log('DomContent Loaded');
+            const csrfToken = document.head.querySelector('meta[name="csrf-token"]').content;
+            document.querySelectorAll('.removeFromCart').forEach(function (button) {
+                button.addEventListener('click', function () {
+                    const productId = this.getAttribute('data-product-id');
+                    removeFromCart(productId, csrfToken);
+                });
+            });
+            document.querySelectorAll('.changeQuantity').forEach(function (button) {
+                button.addEventListener('click', function () {
+                    const productId = this.getAttribute('data-product-id');
+                    const changeType = this.getAttribute('data-change');
+                    changeQuantity(productId, changeType, csrfToken);
+                    
+                });
+            });
+            getCartData(csrfToken); 
+        });
+
+        function changeQuantity(productId, changeType, csrfToken) {
+            console.log('Quantity Changed');
+            fetch('/cart/change-quantity', {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': csrfToken,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    product_id: productId,
+                    change_type: changeType
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                getCartData(csrfToken);
+            })
+            .catch(error => console.error('Error:', error));
+        }
+
+        function removeFromCart(productId, csrfToken) {
+            console.log('Item Removed');
+            fetch('/cart/remove', {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': csrfToken,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    product_id: productId
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                getCartData(csrfToken);
+            })
+            .catch(error => console.error('Error:', error));
+        }
+
+        function getCartData(csrfToken) {
+            console.log('Item Fetched');
+            fetch('/cart/data', {
+                method: 'GET',
+                headers: {
+                    'X-CSRF-TOKEN': csrfToken,
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Updated cart data:', data);
+                updateTotals(data);
+            })
+            .catch(error => console.error('Error:', error));
+        }
+        function updateTotals(data) {
+            console.log('Total Updated; ' , data);
+              const subtotal = parseFloat('{{ $cartItems->sum(function ($item) { return $item->price * $item->quantity; }) }}');
+            const taxRate = 0.13;
+            const tax = subtotal * taxRate;
+            const total = subtotal + tax;
+
+            document.getElementById('Tax').innerText = `Tax: $${tax.toFixed(2)}`;
+            document.getElementById('Total').innerText = `Total: $${total.toFixed(2)}`;
+
+        }
+    </script>
+
+    @extends('layouts.frontendlayout')
+
+  @section('content')
+        <h1>Your Cart</h1>
+
+        @if ($cartItems->isEmpty())
+            <p>Your cart is empty.</p>
+        @else
+            <table class="table">
+                <thead>
                     <tr>
-                        <td>{{ $item->product->name }}</td>
-                        <td>{{ $item->price }}</td>
-                        <td>{{ $item->quantity }}</td>
-                        <td>{{ $item->price * $item->quantity }}</td>
-                        <td>
-                            <button class="btn btn-danger removeFromCartButton" data-product-id="{{ $item->product_id }}">
-                                Remove
-                            </button>
-                        </td>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Total</th>
+                        <th></th>
                     </tr>
-                @endforeach
-            </tbody>
-        </table>
-        
-        
-        <div>
-            <h4>Promo Code:</h4>
-            <input type="text" id="PromoCode" class="border rounded px-3 py-2 w-1/4">
-            <p>
-                // 'GIVEMECOFFEE' , makes final price 1$
-                // 'GIVEMELATTE' , makes final price 2$
-                // 'GIVEMEFRAPPE' , makes final price 3$
-                // 'PRETTYPENNY' , makes final price 0.01$
-                // 'NOGST4ME' , removes tax 
-                // '5FINGERDISCOUNT' , makes it free
-                // '99%OFF' , 99% off on order
-            </p>
-            <label for="Province" class="block text-gray-700 font-bold mb-2">Province :</label>
-            <select id="Province" class="border rounded px-3 py-2 w-full">
-                <option value="Ontario">Ontario</option>
-                <option value="Quebec">Quebec</option>
-                <option value="Saskatchewan">Saskatchewan</option>
-                <option value="PEI">PEI</option>
-                <option value="Manitoba">Manitoba</option>
-                <option value="Alberta">Alberta</option>
-                <option value="British Columbia">British Columbia</option>
-                <option value="Nova Scotia">Nova Scotia</option>
-                <option value="Yukon">Yukon</option>
-                <option value="NWT">Northwest Territories</option>
-                <option value="Newfoundland">Newfoundland</option>
-                <option value="Nunavut">Nunavut</option>
+                </thead>
+                <tbody>
+                    @foreach ($cartItems as $item)
+                        <tr>
+                            <td>{{ $item->product->name }}</td>
+                            <td>{{ $item->price }}</td>
+                            <td>&nbsp; &nbsp;<button class="btn btn-secondary changeQuantity" data-product-id="{{ $item->product_id }}" data-change="decrease"> - </button>&nbsp;&nbsp;{{ $item->quantity }}&nbsp;&nbsp;<button class="btn btn-secondary changeQuantity" data-product-id="{{ $item->product_id }}" data-change="increase">+</button>&nbsp;&nbsp;</td>
+                            <td>{{ $item->price * $item->quantity }}</td>
+                            <td>
+                                <button class="btn btn-danger removeFromCart" data-product-id="{{ $item->product_id }}">
+                                    Remove
+                                </button>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
 
+            <div>
+                <h4>Subtotal: ${{ $cartItems->sum(function ($item) { return $item->price * $item->quantity; }) }}</h4>
+                <br>
+                <h4 id="Tax">Tax: $0.00</h4>
+                <br>
+                <h4 id="Total">Total: $0.00</h4>
+                <br>
+                <button class="btn btn-success">Checkout</button>
+            </div>
+        @endif
+    @endsection
 
-             
-            </select>
-            <br>
-            <h4>Subtotal: ${{ $cartItems->sum(function ($item) {
-                return $item->price * $item->quantity;
-            }) }}</h4>
-            <br>
-            <h4>Shipping:</h4>
-            <br>
-            <h4>Tax: </h4>
-            <br>
-            <h4>Total: </h4>
-            <br>
-            <button class="btn btn-success">Checkout</button>
-        </div>
-    @endif
-@endsection 
+</body>
+</html>

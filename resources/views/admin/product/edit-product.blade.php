@@ -1,7 +1,8 @@
 @extends('layouts.adminlayout')
-
+<head>
 @section('title', 'Edit Product')
-
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
 @section('content')
 
     <h1>Edit Product</h1>
@@ -29,6 +30,10 @@
                 <div class="col-md-6 mb-3">
                     <label for="slug">Slug</label>
                     <input type="text" class="form-control" name="slug" value="{{ $product->slug }}">
+                </div>
+                <div class ="col-md-12 mb-3">
+                    <label for="image">Image</label>
+                    <input type="file" class="form-control" name="image" value="{{ $product->image }}">
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="cost">Cost</label>
@@ -58,13 +63,18 @@
                     <label for="size">Size</label>
                     <input type="text" class="form-control" name="size" value="{{ $product->size }}">
                 </div>
-                <div class="col-md-12 mb-3">
-                    <label for="is_featured">Is Featured</label>
-                    <input type="checkbox" class="form-control" name="is_featured" value="1" {{ $product->is_featured ? 'checked' : '' }}>
+                <div class ="col-md-6 mb-3">
+                     <label for="color">Color</label>
+                     <input type="text" class="form-control" name="color" required>
                 </div>
-                <div class="col-md-12 mb-3">
-                    <label for="is_available">Is Available</label>
-                    <input type="checkbox" class="form-control" name="is_available" value="1" {{ $product->is_available ? 'checked' : '' }}>
+                <div class="col-md-12">
+                <label for="is_featured" class="form-check-label">Is Featured</label>
+                    <input type="checkbox" class="form-check-input" name="is_featured" value="1" {{ $product->is_featured ? 'checked' : '' }}>
+                </div>
+                
+                <div class="col-md-12 ">
+                    <label for="is_available" class="form-check-label">Is Available</label>
+                    <input type="checkbox" class="fform-check-input" name="is_available" value="1" {{ $product->is_available ? 'checked' : '' }}>
                 </div>
                 <div class="col-md-12">
                     <button type="submit" class="btn btn-primary">Update</button>
@@ -83,4 +93,13 @@
             });
         </script>
     @endif
+    @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 @endsection

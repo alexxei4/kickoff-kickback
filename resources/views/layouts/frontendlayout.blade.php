@@ -30,12 +30,13 @@
     <header class="bg-white shadow">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container px-4 px-lg-5">
-                <a href="{{ route('home') }}" class="text-2xl font-bold text-black-600"> <img src="{{ asset('/public/images/KickOffKickBack.png') }}" alt="My Store Logo" width="100" height="100"></a>
+            <img src="{{ asset('/public/images/KickOffKickBack.png') }}" alt="My Store Logo" width="100" height="100">
+           
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
                         <li class="nav-item"><a class="nav-link active" aria-current="page" href="/home">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="">About</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/aboutus">About</a></li>
                         <li class="nav-item"><a class="nav-link" href="/">Products</a></li>
                         @if (Route::has('login'))
                             @auth
@@ -80,14 +81,17 @@
                     </ul>
                     @auth
                         <div class="d-flex">
+                            @if(Auth::user()->role === 0)
+                                    <a href="{{ route('cart.index') }}" class="btn btn-outline-dark flex-shrink-0">
+                                    Cart 
+                                    </a>
+                                    &nbsp;
+                                    <a href="{{ route('wishlist.index') }}" class="btn btn-outline-dark flex-shrink-0">
+                                        Wishlist 
+                                    </a>
+                            @endif
                             
-                            <a href="{{ route('cart.index') }}" class="btn btn-outline-dark flex-shrink-0">
-                                Cart <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
-                            </a>
-                            &nbsp;
-                            <a href="{{ route('wishlist.index') }}" class="btn btn-outline-dark flex-shrink-0">
-                                Wishlist <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
-                            </a>
+                            
                         </div>
                         
                     @endauth

@@ -1,9 +1,10 @@
 @extends('layouts.adminlayout')
-
+<head>
 @section('title', 'Edit User')
-
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
 @section('content')
-    <h1>Edit Category</h1>
+    <h1>Edit User</h1>
 
     <div class="card">
         <div class="card-body">

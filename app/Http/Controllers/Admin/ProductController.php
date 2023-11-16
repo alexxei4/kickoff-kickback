@@ -11,31 +11,34 @@ use App\Models\Cart;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
-
+// This the controller for the products section in the admin dashboard and in the store itself
 class ProductController extends Controller
 
 {
-     public function showProduct(Product $product)
-     {
+    // this is for displaying the product itself in the store
+    public function showProduct(Product $product)
+    {
         
         $variations = Variation::where('product_id', $product->id)->get();
         return view('frontend.product.show', compact('product', 'variations'));
         
-     }
- 
-     public function showAllProducts()
-     {
+    }
+     // this is for displaying all products
+    public function showAllProducts()
+    {
          $products = Product::all();
          return view('products.index', ['products' => $products]);
-     }
+    }
 
+    // This is for displaying products in the admin dashboard 
     public function index()
     {
-        $products = Product::all();
-        return view('admin.product.index-product', compact('products'));
+            $products = Product::all();
+            return view('admin.product.index-product', compact('products'));
     }
+    // This is for creating a new product in the admin dashboard
     public function insert(Request $request)
-        {
+    {
             $validatedData = $request->validate([
                 'category_id' => 'required|string',
                 'name' => 'required|string',
@@ -105,7 +108,7 @@ class ProductController extends Controller
             
             return redirect()->route('admin.product.add-product')->with('success', 'Product added successfully!');
         }
-
+    // This is for editing the product in the admin dashboard
     public function edit(Product $product)
     {
        
@@ -114,9 +117,10 @@ class ProductController extends Controller
         return view('admin.product.edit-product', compact('product', 'categories'));
     }
 
-
+    // this is for updating the product in the admin dashboard
     public function update(Request $request, Product $product)
     {
+   
         $validatedData = $request->validate([
             'category_id' => 'required|exists:categories,id',
             'name' => 'required|string',
@@ -124,12 +128,12 @@ class ProductController extends Controller
             'description' => 'required|string',
             'cost' => 'required|numeric',
             'quantity' => 'required|integer',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif',
             'is_featured' =>  'nullable|boolean',
             'is_available' =>  'nullable|boolean',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif',
             'brand' => 'required|string',
             'sku' => 'required|string|unique:products,sku,' . $product->id,
-            'size' => 'required_if:category_id,5,6,8|string', 
+            'size' => 'required|string', 
             'color' => 'required|string',
         ]);
 
@@ -142,7 +146,6 @@ class ProductController extends Controller
         $product->is_featured = $request->filled('is_featured') ? true : null;
         $product->is_available = $request->filled('is_available') ? true : null;
         $product->brand = $request->input('brand');
-        $product->sku = $request->input('sku');
         $product->size = $request->input('size');
         $product->color = $request->input('color');
 
@@ -173,13 +176,13 @@ class ProductController extends Controller
             $product->image = $imageName;
         }
         
-
+      
         $product->save();
 
      
         return redirect()->route('products')->with('success', 'Product updated successfully!');
     }
-
+    // This is for deleting the product in the admin section
     public function destroy(Product $product)
     {
     
@@ -187,7 +190,8 @@ class ProductController extends Controller
 
         return redirect()->route('products')->with('success', 'Product deleted successfully!');
     }
-
+    // This is for adding variations which I unfortunately chose to not go 
+    // forward with as it wasnt a requirement and it was too time consuming 
     public function addVariation(Request $request, Product $product)
     {
         $validatedData = $request->validate([
@@ -204,11 +208,14 @@ class ProductController extends Controller
 
         return redirect()->route('product.variations', $product)->with('success', 'Variation added successfully');
     }
+    // This is for editing variations which I unfortunately chose to not go 
+    // forward with as it wasnt a requirement and it was too time consuming 
     public function editVariation(Product $product, Variation $variation)
     {
         return view('variations.edit', compact('product', 'variation'));
     }
-
+    // This is for updating variations which I unfortunately chose to not go 
+    // forward with as it wasnt a requirement and it was too time consuming 
     public function updateVariation(Request $request, Product $product, Variation $variation)
     {
         $validatedData = $request->validate([
@@ -223,6 +230,8 @@ class ProductController extends Controller
 
         return redirect()->route('product.variations', $product)->with('success', 'Variation updated successfully');
     }
+    // This is for deleting variations which I unfortunately chose to not go 
+    // forward with as it wasnt a requirement and it was too time consuming 
     public function deleteVariation(Product $product, Variation $variation)
     {
         $variation->delete();

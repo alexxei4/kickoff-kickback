@@ -14,7 +14,8 @@
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.4",
         "mailjet/laravel-mailjet": "^3.0",
-        "mailjet/mailjet-bundle": "^1.0@beta"
+        "mailjet/mailjet-bundle": "^1.0@beta",
+        "stripe/stripe-php": "^13.3"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

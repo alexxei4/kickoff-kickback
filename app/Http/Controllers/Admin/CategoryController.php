@@ -8,14 +8,17 @@ use App\Models\Category;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 
-
+// This is the controller for the Category section in the admin dashboard
 class CategoryController extends Controller
 {
+
+    // This displays all of the categories
     public function index()
     {
         $categories = Category::all();
         return view('admin.category.index-category', compact('categories'));
     }
+    // This is for creating a new category 
     public function insert(Request $request)
     {
     
@@ -37,12 +40,12 @@ class CategoryController extends Controller
        
         return redirect()->route('categories')->with('success', 'Category inserted successfully');
     }
-
+    // This is for editing the category 
     public function edit(Category $category)
     {
         return view('admin.category.edit-category', compact('category'));
     }
-
+    // This is for Updating the category 
     public function update(Request $request, Category $category)
         {
             $request->validate([
@@ -63,7 +66,7 @@ class CategoryController extends Controller
             return redirect()->route('categories')->with('success', 'Category edited successfully');
         }
 
-
+    // This is for deleting the category
     public function destroy(Category $category)
     {
     

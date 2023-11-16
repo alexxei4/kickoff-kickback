@@ -3,10 +3,11 @@
 @section('title', 'Welcome to My Store')
 
 @section('content')
+
     <div class="container mx-auto py-8 text-center">
         <h1 class="text-4xl font-semibold text-black-600">Welcome to KickOff-KickBack</h1>
 
-       
+        
 
         <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
