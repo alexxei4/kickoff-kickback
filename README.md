@@ -9,6 +9,7 @@
 <p>-Create Categories (Admin) </p>
 <p>-Create Products (Admin)</p>
 <p>-Have CRUD Access over other users(Admin)</p>
-<p>Here is my demonstration for it: <iframe width="420" height="315"
+<p>Here is my demonstration for it:</p>
+ <iframe width="420" height="315"
 src="https://youtu.be/RP7l0yf9aFQ">
-</iframe></p>
+</iframe>
